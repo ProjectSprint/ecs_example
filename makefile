@@ -23,7 +23,7 @@ build:
 .PHONY: push
 push:
 	@echo "Logging into ECR..."
-	aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(ECR_ENDPOINT)
+	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin $(ECR_ENDPOINT)
 	
 	@echo "Checking for existing latest tag..."
 	if aws ecr describe-images --repository-name $(ECR_NAME) --image-ids imageTag=latest >/dev/null 2>&1; then \

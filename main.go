@@ -43,7 +43,6 @@ func echoHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Set response headers
 	w.Header().Set("Content-Type", "application/json")
-
 	w.WriteHeader(http.StatusOK)
 
 	// Write response

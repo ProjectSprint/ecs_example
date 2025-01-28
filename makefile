@@ -26,9 +26,9 @@ push:
 	aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin $(ECR_ENDPOINT)
 	
 	@echo "Checking for existing latest tag..."
-	if aws ecr describe-images --repository-name $(ECR_NAME) --image-ids imageTag=latest >/dev/null 2>&1; then \
+	if aws ecr-public describe-images --repository-name $(ECR_NAME) --image-ids imageTag=latest --region us-east-1 >/dev/null 2>&1; then \
 		echo "Removing old latest tag..."; \
-		aws ecr batch-delete-image --repository-name $(ECR_NAME) --image-ids imageTag=latest; \
+		aws ecr-public batch-delete-image --repository-name $(ECR_NAME) --image-ids imageTag=latest --region us-east-1; \
 	fi
 	
 	@echo "Pushing images to ECR..."

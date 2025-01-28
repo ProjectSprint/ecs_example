@@ -38,11 +38,13 @@ func echoHandler(w http.ResponseWriter, r *http.Request) {
 	response, err := json.MarshalIndent(requestInfo, "", "  ")
 	if err != nil {
 		http.Error(w, "Error creating response", http.StatusInternalServerError)
+
 		return
 	}
 
 	// Set response headers
 	w.Header().Set("Content-Type", "application/json")
+
 	w.WriteHeader(http.StatusOK)
 
 	// Write response

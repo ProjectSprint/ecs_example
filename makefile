@@ -28,7 +28,7 @@ push:
 	@echo "Checking for existing latest tag..."
 	if aws ecr-public describe-images --repository-name $(ECR_NAME) --image-ids imageTag=latest --region us-east-1 >/dev/null 2>&1; then \
 		echo "Removing old latest tag..."; \
-		aws ecr-public batch-delete-image --repository-name $(ECR_NAME) --image-ids imageTag=latest --region us-east-1; \
+		aws ecr-public batch-delete-image --repository-name $(ECR_NAME) --image-ids "[{\"imageTag\":\"latest\"}]" --region us-east-1; \
 	fi
 	
 	@echo "Pushing images to ECR..."

@@ -34,5 +34,5 @@ make push
 ```
 ```bash
 # force AWS ECS to take new image from the ECR and deploy it
-make build
+make deploy
 ```

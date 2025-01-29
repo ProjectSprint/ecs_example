@@ -27,11 +27,10 @@ func echoHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Create request info struct
 	requestInfo := RequestInfo{
-		Method:      r.Method,
-		URL:         r.URL.Path,
-		Headers:     r.Header,
-		Body:        string(body),
-		QueryParams: r.URL.RawQuery,
+		Method:  r.Method,
+		URL:     r.URL.Path,
+		Headers: r.Header,
+		Body:    string(body),
 	}
 
 	// Convert to JSON

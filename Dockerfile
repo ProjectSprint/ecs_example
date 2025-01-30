@@ -20,6 +20,9 @@ FROM alpine:3.19
 
 WORKDIR /app
 
+# Install curl
+RUN apk add --no-cache curl
+
 # Copy the binary from builder
 COPY --from=builder /app/echo-server .
 

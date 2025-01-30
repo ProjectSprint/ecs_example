@@ -41,6 +41,9 @@ func echoHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Log the response
+	fmt.Printf("%s", response)
+
 	// Set response headers
 	w.Header().Set("Content-Type", "application/json")
 
@@ -48,6 +51,7 @@ func echoHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Write response
 	fmt.Fprintf(w, "%s", response)
+
 }
 
 func main() {

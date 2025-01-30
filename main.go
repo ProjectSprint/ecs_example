@@ -48,6 +48,9 @@ func echoHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Write response
 	fmt.Fprintf(w, "%s", response)
+
+	// Log the response
+	fmt.Printf("%s", response)
 }
 
 func main() {

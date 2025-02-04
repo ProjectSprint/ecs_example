@@ -1,0 +1,369 @@
+{
+  "Path": "/",
+  "RoleName": "example-app-staging-EnvManagerRole",
+  "Policies": [
+    {
+      "PolicyName": "root",
+      "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Action": [
+              "logs:GetLogRecord",
+              "logs:GetQueryResults",
+              "logs:StartQuery",
+              "logs:GetLogEvents",
+              "logs:DescribeLogStreams",
+              "logs:StopQuery",
+              "logs:TestMetricFilter",
+              "logs:FilterLogEvents",
+              "logs:GetLogGroupFields",
+              "logs:GetLogDelivery"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "CloudwatchLogs"
+          },
+          {
+            "Action": [
+              "cloudwatch:DescribeAlarms"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "Cloudwatch"
+          },
+          {
+            "Action": [
+              "ecs:ListAttributes",
+              "ecs:ListTasks",
+              "ecs:DescribeServices",
+              "ecs:DescribeTaskSets",
+              "ecs:ListContainerInstances",
+              "ecs:DescribeContainerInstances",
+              "ecs:DescribeTasks",
+              "ecs:DescribeClusters",
+              "ecs:UpdateService",
+              "ecs:PutAttributes",
+              "ecs:StartTelemetrySession",
+              "ecs:StartTask",
+              "ecs:StopTask",
+              "ecs:ListServices",
+              "ecs:ListTaskDefinitionFamilies",
+              "ecs:DescribeTaskDefinition",
+              "ecs:ListTaskDefinitions",
+              "ecs:ListClusters",
+              "ecs:RunTask",
+              "ecs:ListServicesByNamespace"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "ECS"
+          },
+          {
+            "Condition": {
+              "StringEquals": {
+                "aws:ResourceTag/copilot-environment": "staging",
+                "aws:ResourceTag/copilot-application": "example-app"
+              }
+            },
+            "Action": [
+              "ecs:ExecuteCommand",
+              "ssm:StartSession"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "ExecuteCommand"
+          },
+          {
+            "Action": [
+              "states:StartExecution",
+              "states:DescribeStateMachine"
+            ],
+            "Resource": [
+              "arn:aws:states:ap-southeast-1:024848467457:stateMachine:example-app-staging-*"
+            ],
+            "Effect": "Allow",
+            "Sid": "StartStateMachine"
+          },
+          {
+            "Action": [
+              "cloudformation:CancelUpdateStack",
+              "cloudformation:CreateChangeSet",
+              "cloudformation:CreateStack",
+              "cloudformation:DeleteChangeSet",
+              "cloudformation:DeleteStack",
+              "cloudformation:Describe*",
+              "cloudformation:DetectStackDrift",
+              "cloudformation:DetectStackResourceDrift",
+              "cloudformation:ExecuteChangeSet",
+              "cloudformation:GetTemplate",
+              "cloudformation:GetTemplateSummary",
+              "cloudformation:UpdateStack",
+              "cloudformation:UpdateTerminationProtection"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "CloudFormation"
+          },
+          {
+            "Condition": {
+              "StringEquals": {
+                "iam:ResourceTag/copilot-application": "example-app",
+                "iam:ResourceTag/copilot-environment": "staging"
+              }
+            },
+            "Action": [
+              "iam:GetRole",
+              "iam:PassRole"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "GetAndPassCopilotRoles"
+          },
+          {
+            "Action": [
+              "ecr:BatchGetImage",
+              "ecr:BatchCheckLayerAvailability",
+              "ecr:CompleteLayerUpload",
+              "ecr:DescribeImages",
+              "ecr:DescribeRepositories",
+              "ecr:GetDownloadUrlForLayer",
+              "ecr:InitiateLayerUpload",
+              "ecr:ListImages",
+              "ecr:ListTagsForResource",
+              "ecr:PutImage",
+              "ecr:UploadLayerPart",
+              "ecr:GetAuthorizationToken"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "ECR"
+          },
+          {
+            "Action": [
+              "resource-groups:GetGroup",
+              "resource-groups:GetGroupQuery",
+              "resource-groups:GetTags",
+              "resource-groups:ListGroupResources",
+              "resource-groups:ListGroups",
+              "resource-groups:SearchResources"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "ResourceGroups"
+          },
+          {
+            "Action": [
+              "ssm:DeleteParameter",
+              "ssm:DeleteParameters",
+              "ssm:GetParameter",
+              "ssm:GetParameters",
+              "ssm:GetParametersByPath"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "SSM"
+          },
+          {
+            "Action": [
+              "ssm:PutParameter",
+              "ssm:AddTagsToResource"
+            ],
+            "Resource": [
+              "arn:aws:ssm:ap-southeast-1:024848467457:parameter/copilot/example-app/staging/secrets/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "SSMSecret"
+          },
+          {
+            "Action": [
+              "ssm:StartSession"
+            ],
+            "Resource": [
+              "arn:aws:ssm:ap-southeast-1::document/AWS-StartPortForwardingSessionToRemoteHost"
+            ],
+            "Effect": "Allow",
+            "Sid": "SSMSession"
+          },
+          {
+            "Action": [
+              "elasticloadbalancing:DescribeLoadBalancerAttributes",
+              "elasticloadbalancing:DescribeSSLPolicies",
+              "elasticloadbalancing:DescribeLoadBalancers",
+              "elasticloadbalancing:DescribeTargetGroupAttributes",
+              "elasticloadbalancing:DescribeListeners",
+              "elasticloadbalancing:DescribeTags",
+              "elasticloadbalancing:DescribeTargetHealth",
+              "elasticloadbalancing:DescribeTargetGroups",
+              "elasticloadbalancing:DescribeRules"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "ELBv2"
+          },
+          {
+            "Action": [
+              "s3:ListBucketByTags",
+              "s3:GetLifecycleConfiguration",
+              "s3:GetBucketTagging",
+              "s3:GetInventoryConfiguration",
+              "s3:GetObjectVersionTagging",
+              "s3:ListBucketVersions",
+              "s3:GetBucketLogging",
+              "s3:ListBucket",
+              "s3:GetAccelerateConfiguration",
+              "s3:GetBucketPolicy",
+              "s3:GetObjectVersionTorrent",
+              "s3:GetObjectAcl",
+              "s3:GetEncryptionConfiguration",
+              "s3:GetBucketRequestPayment",
+              "s3:GetObjectVersionAcl",
+              "s3:GetObjectTagging",
+              "s3:GetMetricsConfiguration",
+              "s3:HeadBucket",
+              "s3:GetBucketPublicAccessBlock",
+              "s3:GetBucketPolicyStatus",
+              "s3:ListBucketMultipartUploads",
+              "s3:GetBucketWebsite",
+              "s3:ListJobs",
+              "s3:GetBucketVersioning",
+              "s3:GetBucketAcl",
+              "s3:GetBucketNotification",
+              "s3:GetReplicationConfiguration",
+              "s3:ListMultipartUploadParts",
+              "s3:GetObject",
+              "s3:GetObjectTorrent",
+              "s3:GetAccountPublicAccessBlock",
+              "s3:ListAllMyBuckets",
+              "s3:DescribeJob",
+              "s3:GetBucketCORS",
+              "s3:GetAnalyticsConfiguration",
+              "s3:GetObjectVersionForReplication",
+              "s3:GetBucketLocation",
+              "s3:GetObjectVersion",
+              "kms:Decrypt"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "BuiltArtifactAccess"
+          },
+          {
+            "Action": [
+              "s3:PutObject",
+              "s3:PutObjectAcl"
+            ],
+            "Resource": [
+              "arn:aws:s3:::stackset-example-app-infr-pipelinebuiltartifactbuc-h0zroogiknk2",
+              "arn:aws:s3:::stackset-example-app-infr-pipelinebuiltartifactbuc-h0zroogiknk2/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "PutObjectsToArtifactBucket"
+          },
+          {
+            "Action": [
+              "kms:GenerateDataKey"
+            ],
+            "Resource": "arn:aws:kms:ap-southeast-1:024848467457:key/8b63e14a-6835-49cd-a65a-64a785a914f3",
+            "Effect": "Allow",
+            "Sid": "EncryptObjectsInArtifactBucket"
+          },
+          {
+            "Action": [
+              "ec2:DescribeSubnets",
+              "ec2:DescribeSecurityGroups",
+              "ec2:DescribeNetworkInterfaces",
+              "ec2:DescribeRouteTables"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "EC2"
+          },
+          {
+            "Action": [
+              "apprunner:DescribeService",
+              "apprunner:ListOperations",
+              "apprunner:ListServices",
+              "apprunner:PauseService",
+              "apprunner:ResumeService",
+              "apprunner:StartDeployment",
+              "apprunner:DescribeObservabilityConfiguration",
+              "apprunner:DescribeVpcIngressConnection"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "AppRunner"
+          },
+          {
+            "Action": [
+              "tag:GetResources"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "Tags"
+          },
+          {
+            "Action": [
+              "application-autoscaling:DescribeScalingPolicies"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "ApplicationAutoscaling"
+          },
+          {
+            "Action": [
+              "iam:DeleteRole",
+              "iam:ListRolePolicies",
+              "iam:DeleteRolePolicy"
+            ],
+            "Resource": [
+              "arn:aws:iam::024848467457:role/example-app-staging-CFNExecutionRole",
+              "arn:aws:iam::024848467457:role/example-app-staging-EnvManagerRole"
+            ],
+            "Effect": "Allow",
+            "Sid": "DeleteRoles"
+          },
+          {
+            "Action": [
+              "cloudformation:DescribeStacks",
+              "cloudformation:DeleteStack"
+            ],
+            "Resource": [
+              "arn:aws:cloudformation:ap-southeast-1:024848467457:stack/example-app-staging/*"
+            ],
+            "Effect": "Allow",
+            "Sid": "DeleteEnvStack"
+          },
+          {
+            "Action": [
+              "cloudformation:ListStacks"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "ListStacks"
+          },
+          {
+            "Action": [
+              "rds:DescribeDBInstances",
+              "rds:DescribeDBClusters"
+            ],
+            "Resource": "*",
+            "Effect": "Allow",
+            "Sid": "RDS"
+          }
+        ]
+      }
+    }
+  ],
+  "AssumeRolePolicyDocument": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Action": "sts:AssumeRole",
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::024848467457:root"
+        }
+      }
+    ]
+  }
+}

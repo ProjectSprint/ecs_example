@@ -1,0 +1,70 @@
+# available options: https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/
+name: example-service
+type: Load Balanced Web Service
+
+http:
+  path: '/'
+  alb: arn:aws:elasticloadbalancing:ap-southeast-1:024848467457:loadbalancer/app/example-lb-ple/b1c975896e2eb853
+  healthcheck:
+    path: '/'
+    port: 8080
+    success_codes: '200'
+    healthy_threshold: 3
+    unhealthy_threshold: 2
+    interval: 15s
+    timeout: 10s
+    grace_period: 60s
+
+exec: true # Enable running commands in your container.
+cpu: 256 # Number of CPU units for the task.
+memory: 512 # Amount of memory in MiB used by the task.
+platform: linux/arm64
+
+# count: 1 # for running in fargate
+count:
+  # spot: 1 # for running in fargate spot
+  range: 1-2 # for autoscale
+  cooldown:
+    in: 60s
+    out: 30s
+  cpu_percentage: 70
+  requests: 30
+  response_time: 2s
+
+image:
+  build: Dockerfile
+  port: 8080
+
+variables:
+  PORT: 8080
+  DB_NAME: postgres
+  DB_PORT: 5432
+  DB_USERNAME: postgres
+  AWS_S3_BUCKET_NAME: projectsprint-bucket-public-read
+  AWS_REGION: ${AWS_REGION}
+  AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
+  AWS_SECRET_KEY: ${AWS_SECRET_KEY}
+
+deployment:
+  # https://aws.github.io/copilot-cli/docs/include/deployment/
+  # rolling: 'recreate' # Stops existing tasks before new ones are started for faster deployments.
+
+logging:
+  retention: 7 # days
+  destination:
+    name: cloudwatchlogs
+    region: ${AWS_REGION}
+    prefix: ecs
+
+# Tags
+tags:
+  project: projectsprint
+  environment: development
+  team_name: example
+
+network:
+  connect: true # Enable Service Connect for intra-environment traffic between services.
+
+# Configure observability for your environment resources.
+observability:
+  container_insights: false

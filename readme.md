@@ -1,5 +1,5 @@
-# ProjectSprint ECR & ECS Example
-This repo contains example on how to interact with ProjectSprint ECR & ECS
+# ProjectSprint ECS example
+This repo contains example on how to interact with ProjectSprint ECS
 ## Prerequisite
 - [make](https://www.google.com/search?q=install+make)
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
@@ -7,6 +7,10 @@ This repo contains example on how to interact with ProjectSprint ECR & ECS
 - AWS Account (given in the ProjectSprint Discord Server)
 
 ## Setup
+- Make sure you already tell the administrator at the discord server about:
+    - team app name
+    - team services names
+  To be allowed to be created by your account
 - Set your environment variables
     ```bash
     export AWS_ACCESS_KEY=""
@@ -14,7 +18,7 @@ This repo contains example on how to interact with ProjectSprint ECR & ECS
     export AWS_REGION=""
     ```
 - Set your copilot app
-    ```
+    ```bash
     # Run this only once
     copilot app init your-ecs-service-name
     ```

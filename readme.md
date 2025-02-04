@@ -44,4 +44,4 @@ To compile, push and deploy all at once, you can run
 # Run each deploy
 make deploy
 ```
-Or see more available commands at the (makefile)[./makefile]
+Or see more available commands at the [ makefile ]( ./makefile )

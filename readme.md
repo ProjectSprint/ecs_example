@@ -10,6 +10,7 @@ This repo contains example on how to interact with ProjectSprint ECS
 - Make sure you already tell the administrator at the discord server about:
     - team app name
     - team services names
+
   To be allowed to be created by your account
 - Set your environment variables
     ```bash

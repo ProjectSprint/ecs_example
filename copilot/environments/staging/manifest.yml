@@ -11,6 +11,9 @@ network:
   vpc:
     id: ${PROJECTSPRINT_VPC}
     subnets:
+      public:
+        - id: ${PROJECTSPRINT_PUBLIC_SUBNET_1}
+        - id: ${PROJECTSPRINT_PUBLIC_SUBNET_2}
       private:
         - id: ${PROJECTSPRINT_PRIVATE_SUBNET_1}
         - id: ${PROJECTSPRINT_PRIVATE_SUBNET_2}

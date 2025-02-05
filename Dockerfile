@@ -1,21 +1,3 @@
-# Build stage
-FROM golang:1.22-alpine3.19 AS builder
-
-WORKDIR /app
-
-# Copy go mod files
-COPY go.mod .
-
-# Download dependencies
-RUN go mod download
-
-# Copy source code
-COPY . .
-
-# Build the application
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o echo-server
-
-# Final stage
 FROM alpine:3.19
 
 WORKDIR /app
@@ -23,8 +5,8 @@ WORKDIR /app
 # Install curl
 RUN apk add --no-cache curl
 
-# Copy the binary from builder
-COPY --from=builder /app/echo-server .
+# Copy the pre-built binary
+COPY echo-server .
 
 # Expose port 8080
 EXPOSE 8080

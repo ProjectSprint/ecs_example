@@ -18,6 +18,8 @@ This repo contains example on how to interact with ProjectSprint ECS
     export AWS_SECRET_KEY=""
     export AWS_REGION=""
     export PROJECTSPRINT_VPC=""
+    export PROJECTSPRINT_PUBLIC_SUBNET_1=""
+    export PROJECTSPRINT_PUBLIC_SUBNET_2=""
     export PROJECTSPRINT_PRIVATE_SUBNET_1=""
     export PROJECTSPRINT_PRIVATE_SUBNET_2=""
     ```
